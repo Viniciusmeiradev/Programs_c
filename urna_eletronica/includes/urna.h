@@ -106,5 +106,7 @@ class UrnaEletronica{
 
         void registrarVoto
 
+///////////////////////lijubhbguvguvgvgyvyvcgycfcfcfnhbhbhh
 
+kmnjknjnjnjbhbhbhhgvg
         
