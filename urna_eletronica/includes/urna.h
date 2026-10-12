@@ -95,4 +95,16 @@ class UrnaEletronica{
             carregarBancoDados();
         }
 
+        Candidato* buscarCandidato(int numero, std::string cargo){
+            for(auto& c: candidatos){
+                if(c.numero == numero && c.cargo == cargo){
+                    return &c;
+                }
+            }
+            ruturn nullptr;
+        }
+
+        void registrarVoto
+
+
         
