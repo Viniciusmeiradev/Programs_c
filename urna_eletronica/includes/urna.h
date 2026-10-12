@@ -48,15 +48,21 @@ class UrnaEletronica{
 
                 else if(tipo == "NuloPresidente") votosNulosPresidente++;
                 else if(tipo == "BrancoPresidente") votosBrancosPresidente++;
+            }else{
+                for (auto& c : candidatos){
+                    if(c.numero == num){
+                        break;
+                    }
+                }
             }
         }
-
+        arquivo.close();
+    }
+    void salvarVoto(int numero, std::string tipo){
+        std::ofstream arquivo(arquivoBD, std::ios::app);
+        if(arquivo.is_open()){
+            arquivo << numero << " " << tipo << "\n";
+            arquivo.close();
+        }
     }
 }
-
-
-
-
-aijiojafaijuhaufhauhfahfhafhaehfuhuhdfhefhdhfhdhhfhee
-
-fjajfhhaefrhuiahfuhaufahfhruhfgrefe
