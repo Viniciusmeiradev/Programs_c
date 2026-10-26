@@ -104,9 +104,104 @@ class UrnaEletronica{
             ruturn nullptr;
         }
 
-        void registrarVoto
 
-///////////////////////lijubhbguvguvgvgyvyvcgycfcfcfnhbhbhh
+        //1
+        void registrarVotoDeputadoFederal(int numero, bool branco){
+            if(branco){
+                votosBrancosDeputado_federal++;
+                salvarVoto(-1, "BrancoDeputadoFederal");
+            }else{
+                Candidato* c = buscarCandidato(numero, "DeputadoFederal");
+                if(c != nullptr){
+                    c -> ++;
+                    salvarVoto(c -> numero, "DeputadoFederal");
+                }else{
+                votosNulosDeputado_federal++;
+                salvarVoto(-1, "NuloDeputadoFederal");
+                }
+            }
+        }
 
-kmnjknjnjnjbhbhbhhgvg
+
+
+
+
+        //2
+        void registrarVotoDeputadoEstadual(int numero, bool branco){
+            if(branco){
+                votosBrancosDeputado_estadual++;
+                salvarVoto(-1, "BrancoDeputadoEstadual");
+            }else{
+                Candidato* c = buscarCandidato(numero, "DeputadoEstadual");
+                if(c != nullptr){
+                    c -> ++;
+                    salvarVoto(c -> numero, "DeputadoEstadual");
+                }else{
+                votosNulosDeputado_estadual++;
+                salvarVoto(-1, "NuloDeputadoEstadual");
+                }
+            }
+        }
+
+
+
+        //3
+        void registrarVotoSenador(int numero, bool branco){
+            if(branco){
+                votosBrancosSenador++;
+                salvarVoto(-1, "BrancoSenador");
+            }else{
+                Candidato* c = buscarCandidato(numero, "Senador");
+                if(c != nullptr){
+                    c -> ++;
+                    salvarVoto(c -> numero, "Senador");
+                }else{
+                votosNulosSenador++;
+                salvarVoto(-1, "NuloSenador");
+                }
+            }
+        }
+
+
+        //4
+        void registrarVotoGovernador(int numero, bool branco){
+            if(branco){
+                votosBrancosGovernador++;
+                salvarVoto(-1, "BrancoGovernador");
+            }else{
+                Candidato* c = buscarCandidato(numero, "Governador");
+                if(c != nullptr){
+                    c -> ++;
+                    salvarVoto(c -> numero, "Governador");
+                }else{
+                votosNulosDeputado_federal++;
+                salvarVoto(-1, "NuloGovernador");
+                }
+            }
+        }
+
+
+        //5
+        void registrarVotoPresidente(int numero, bool branco){
+            if(branco){
+                votosBrancosPresidente++;
+                salvarVoto(-1, "BrancoPresidente");
+            }else{
+                Candidato* c = buscarCandidato(numero, "Presidente");
+                if(c != nullptr){
+                    c -> ++;
+                    salvarVoto(c -> numero, "Presidente");
+                }else{
+                votosNulosPresidente++;
+                salvarVoto(-1, "NuloPresidente");
+                }
+            }   
+        }
+
+        void ResultadoEleicao(){
+            std::count << "\n***************************************\n";
+            std::count << "Resultado de Urna (Relatório)"
+            std::count <<
+        }
+}
         
