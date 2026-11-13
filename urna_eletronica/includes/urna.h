@@ -198,10 +198,65 @@ class UrnaEletronica{
             }   
         }
 
+
         void ResultadoEleicao(){
-            std::count << "\n***************************************\n";
-            std::count << "Resultado de Urna (Relatório)"
-            std::count <<
-        }
-}
+            std::cout << "\n***************************************\n";
+            std::cout << "\n         Resultado de Urna (Relatorio)      ";
+            std::cout << "\n***************************************\n";
+
+
+
+            std::cout << "\n---    DEPUTADO FEDERAL    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosDeputado_federal << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosDeputado_federal << "\n";
+            for(const auto& c:candidatos){
+                if(c.candidatos == "DeputadoFederal"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    DEPUTADO ESTADUAL    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosDeputado_estadual << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosDeputado_estadual << "\n";
+            for(const auto& c:candidatos){
+                if(c.candidatos == "DeputadoEstadual"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    SENADOR    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosSenador << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosSenador << "\n";
+            for(const auto& c:candidatos){
+                if(c.candidatos == "Senador"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    GOVERNADOR    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosGovernador << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosGovernador << "\n";
+            for(const auto& c:candidatos){
+                if(c.candidatos == "Governador"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    Presidente    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosPresidente << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosPresidente << "\n";
+            for(const auto& c:candidatos){
+                if(c.candidatos == "Presidente"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+            std::cout << "\n========================================\n";
+
+        };
+};
         
