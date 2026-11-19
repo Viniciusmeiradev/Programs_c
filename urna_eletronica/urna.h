@@ -1,0 +1,262 @@
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <vector>
+
+struct Candidato{
+    int numero;
+    std::string nome;
+    std::string partido;
+    std::string cargo;
+    int votos;
+};
+
+class UrnaEletronica{
+    private:
+        std::vector<Candidato> candidatos;
+        int votosBrancosDeputado_federal;
+        int votosBrancosDeputado_estadual;
+        int votosBrancosSenador;
+        int votosBrancosGovernador;
+        int votosBrancosPresidente;
+
+        int votosNulosDeputado_federal;
+        int votosNulosDeputado_estadual;
+        int votosNulosSenador;
+        int votosNulosGovernador;
+        int votosNulosPresidente;
+
+        const std::string arquivoBD = "votos_bd.txt";
+
+        void carregarBancoDados(){
+            std::ifstream arquivo(arquivoBD);
+            if (!arquivo.is_open()) return;
+            
+            int num;
+            std::string tipo;
+            while (arquivo >> num >> tipo){
+                if (num == -1){
+                    if (tipo == "NuloDeputado_federal") votosNulosDeputado_federal++;
+                    else if (tipo == "BrancoDeputado_federal") votosBrancosDeputado_federal++;
+
+                    else if(tipo == "NuloDeputado_estadual") votosNulosDeputado_estadual++;
+                    else if(tipo == "BrancoDeputado_estadual")votosBrancosDeputado_estadual++;
+
+                    else if(tipo == "NuloSenador") votosNulosSenador++;
+                    else if(tipo == "BrancoSenador")votosBrancosSenador++;
+
+                    else if(tipo == "NuloGovernador") votosNulosGovernador++;
+                    else if(tipo == "BrancoGovernador") votosNulosGovernador++;
+
+                    else if(tipo == "NuloPresidente") votosNulosPresidente++;
+                    else if(tipo == "BrancoPresidente") votosBrancosPresidente++;
+                }else{
+                    for (auto& c : candidatos){
+                        if(c.numero == num){
+                            break;
+                        }
+                    }
+                }
+            }
+            arquivo.close();
+        }
+        void salvarVoto(int numero, std::string tipo){
+            std::ofstream arquivo(arquivoBD, std::ios::app);
+            if(arquivo.is_open()){
+                arquivo << numero << " " << tipo << "\n";
+                arquivo.close();
+            }
+        }
+
+    public:
+        UrnaEletronica(){
+            votosBrancosDeputado_federal = 0;  //4
+            votosBrancosDeputado_estadual = 0; //6
+            votosBrancosSenador = 0;  //3
+            votosBrancosGovernador = 0; //2
+            votosBrancosPresidente = 0; //2
+
+            votosNulosDeputado_federal = 0;
+            votosNulosDeputado_estadual = 0;
+            votosNulosSenador = 0;
+            votosNulosGovernador = 0;
+            votosNulosPresidente = 0;
+
+            candidatos.push_back({11, "Joel Silva", "Partido Republicano", "Governador", 0});
+            candidatos.push_back({4578, "Janaina Ribeiro", "Partido Democrata", "Deputado_federal", 0});
+            candidatos.push_back({66, "Anderson Nogueira", "Partido Republicano", "Governador", 0});
+            candidatos.push_back({114754, "Yasmim Jandaira", "Partido Republicano", "Deputado_estadual", 0});
+            candidatos.push_back({7974, "Pedro Leopoldo", "Partido Republicano", "Deputado_federal", 0});
+            candidatos.push_back({556445, "Carlos Magno", "Partido Democrata", "Deputado_estadual", 0});
+            candidatos.push_back({17, "Stephane Ralap", "Partido Republicano", "Presidente", 0});
+            candidatos.push_back({19, "Luis Gonzages", "Partido Democrata", "Presidente", 0});
+            candidatos.push_back({115, "Jamuel Rabelo", "Partido Democrata", "Senador", 0});
+            candidatos.push_back({1199, "Leticia Leite", "Partido Democrata", "Deputado_federal", 0});
+
+            carregarBancoDados();
+        }
+
+        Candidato* buscarCandidato(int numero, std::string cargo){
+            for(auto& c: candidatos){
+                if(c.numero == numero && c.cargo == cargo){
+                    return &c;
+                }
+            }
+            return nullptr;
+        }
+
+
+        //1
+        void registrarVotoDeputadoFederal(int numero, bool branco){
+            if(branco){
+                votosBrancosDeputado_federal++;
+                salvarVoto(-1, "BrancoDeputadoFederal");
+            }else{
+                Candidato* c = buscarCandidato(numero, "DeputadoFederal");
+                if(c != nullptr){
+                    c -> votos++;
+                    salvarVoto(c -> numero, "DeputadoFederal");
+                }else{
+                votosNulosDeputado_federal++;
+                salvarVoto(-1, "NuloDeputadoFederal");
+                }
+            }
+        }
+
+
+
+
+
+        //2
+        void registrarVotoDeputadoEstadual(int numero, bool branco){
+            if(branco){
+                votosBrancosDeputado_estadual++;
+                salvarVoto(-1, "BrancoDeputadoEstadual");
+            }else{
+                Candidato* c = buscarCandidato(numero, "DeputadoEstadual");
+                if(c != nullptr){
+                    c -> votos++;
+                    salvarVoto(c -> numero, "DeputadoEstadual");
+                }else{
+                votosNulosDeputado_estadual++;
+                salvarVoto(-1, "NuloDeputadoEstadual");
+                }
+            }
+        }
+
+
+
+        //3
+        void registrarVotoSenador(int numero, bool branco){
+            if(branco){
+                votosBrancosSenador++;
+                salvarVoto(-1, "BrancoSenador");
+            }else{
+                Candidato* c = buscarCandidato(numero, "Senador");
+                if(c != nullptr){
+                    c -> votos++;
+                    salvarVoto(c -> numero, "Senador");
+                }else{
+                votosNulosSenador++;
+                salvarVoto(-1, "NuloSenador");
+                }
+            }
+        }
+
+
+        //4
+        void registrarVotoGovernador(int numero, bool branco){
+            if(branco){
+                votosBrancosGovernador++;
+                salvarVoto(-1, "BrancoGovernador");
+            }else{
+                Candidato* c = buscarCandidato(numero, "Governador");
+                if(c != nullptr){
+                    c -> votos++;
+                    salvarVoto(c -> numero, "Governador");
+                }else{
+                votosNulosDeputado_federal++;
+                salvarVoto(-1, "NuloGovernador");
+                }
+            }
+        }
+
+
+        //5
+        void registrarVotoPresidente(int numero, bool branco){
+            if(branco){
+                votosBrancosPresidente++;
+                salvarVoto(-1, "BrancoPresidente");
+            }else{
+                Candidato* c = buscarCandidato(numero, "Presidente");
+                if(c != nullptr){
+                    c -> votos++;
+                    salvarVoto(c -> numero, "Presidente");
+                }else{
+                votosNulosPresidente++;
+                salvarVoto(-1, "NuloPresidente");
+                }
+            }   
+        }
+
+
+        void ResultadoEleicao(){
+            std::cout << "\n***************************************\n";
+            std::cout << "\n         Resultado de Urna (Relatorio)      ";
+            std::cout << "\n***************************************\n";
+
+
+
+            std::cout << "\n---    DEPUTADO FEDERAL    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosDeputado_federal << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosDeputado_federal << "\n";
+            for(const auto& c:candidatos){
+                if(c.cargo == "DeputadoFederal"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    DEPUTADO ESTADUAL    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosDeputado_estadual << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosDeputado_estadual << "\n";
+            for(const auto& c:candidatos){
+                if(c.cargo == "DeputadoEstadual"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    SENADOR    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosSenador << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosSenador << "\n";
+            for(const auto& c:candidatos){
+                if(c.cargo == "Senador"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    GOVERNADOR    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosGovernador << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosGovernador << "\n";
+            for(const auto& c:candidatos){
+                if(c.cargo == "Governador"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+
+            std::cout << "\n---    Presidente    ---\n";
+            std::cout << "\n Votos Brancos: " << votosBrancosPresidente << "\n";
+            std::cout << "\n Votos Nulos: " << votosNulosPresidente << "\n";
+            for(const auto& c:candidatos){
+                if(c.cargo == "Presidente"){
+                    std::cout << c.nome << "(" << c.partido << ") - Numero " << c.numero << ":" << c.votos << "votos\n";
+                }
+            }
+
+            std::cout << "\n========================================\n";
+
+        };
+};
